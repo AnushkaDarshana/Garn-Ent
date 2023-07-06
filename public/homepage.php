@@ -1,8 +1,21 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<?php
+    // Start the session
+    session_start();
+
+    // Check if the user is logged in by checking if session variables are set
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        // User is logged in.
+    } else{
+        // User is not logged in.
+        // Store message to display as a JavaScript alert.
+        echo "<script type='text/javascript'>alert('You are not logged in.');</script>";
+        // Redirect to login page
+        echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
+        exit;
+    }
+?>
+<html class="no-js" lang="">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
