@@ -1,17 +1,15 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
+<html class="no-js" lang=""> 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sufee Admin - HTML5 Admin Template</title>
-    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <title>Admin | Garn Enterprices</title>
+    <meta name="description" content="Admin Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-icon.png">
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="images/logo2.png" type="image/x-icon">
 
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -40,14 +38,14 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
+                <a class="navbar-brand" href="./"><h5>GARN Enterprices</h5></a>
                 <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
             </div>
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                        <a href="homepage.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <h3 class="menu-title">UI elements</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
@@ -136,7 +134,7 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                    <div class="header-left">
+                    <!-- <div class="header-left">
                         <button class="search-trigger"><i class="fa fa-search"></i></button>
                         <div class="form-inline">
                             <form class="search-form">
@@ -210,7 +208,7 @@
                             </a>
                           </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="col-sm-5">
@@ -222,15 +220,15 @@
                         <div class="user-menu dropdown-menu">
                                 <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
 
-                                <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+                                <!-- <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a> -->
 
-                                <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+                                <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a> -->
 
                                 <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
                         </div>
                     </div>
 
-                    <div class="language-select dropdown" id="language-select">
+                    <!-- <div class="language-select dropdown" id="language-select">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
                             <i class="flag-icon flag-icon-us"></i>
                         </a>
@@ -248,7 +246,7 @@
                                 <i class="flag-icon flag-icon-it"></i>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -260,7 +258,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Dashboard</h1>
+                        <h1>Admin Dashboard</h1>
                     </div>
                 </div>
             </div>
@@ -277,14 +275,15 @@
 
         <div class="content mt-3">
 
-            <div class="col-sm-12">
+            <!-- <div class="col-sm-12">
                 <div class="alert  alert-success alert-dismissible fade show" role="alert">
                   <span class="badge badge-pill badge-success">Success</span> You successfully read this important alert message.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-            </div>
+            </div> -->
+            <!-- To add the welcome message or notification -->
 
 
            <div class="col-sm-6 col-lg-3">
