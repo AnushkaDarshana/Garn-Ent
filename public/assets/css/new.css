@@ -1,0 +1,31 @@
+
+
+
+.btn-success-add-emp{
+    padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  /* padding-left: 20px; */
+}
+
+.btn-success-add-emp:hover{
+    background-color: #45a049;
+}
+
+.btn-reset-add-emp{
+    padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-reset-add-emp:hover{
+    background-color: #d32f2f;
+}
