@@ -34,8 +34,7 @@
 
         <?php include './components/topNav.html'; ?>
 
-
-<div class="col-lg-12">
+        <div class="col-lg-12">
     <div class="card">
         <div class="card-header" id="productHead">
             <strong>New Product</strong>
