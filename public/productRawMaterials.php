@@ -46,19 +46,37 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <div class="page-header float-right">
-                <div class="page-title">
-                    <ol class="breadcrumb text-right">
-                        <?php
-
-                        if ($_SESSION['usertype'] === 'Admin')
-                        {
-                            echo ('<div><button type="button" $dis2 data-toggle="modal" data-target="#largeModal" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Item</button> </div>');
-                        }
-                        ?>
-                    </ol>
-                </div>
-            </div>
+        <form action="../src/add_raw_materials.php" data-parsley-validate="" method="post" action="#" enctype="multipart/form-data" class="form-horizontal">
+                    <input type="hidden"  id="randomNo" name="ran" value="<?=$random;?>">
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Item Name</label></div>
+                        <div class="col-12 col-md-7"><input type="text" required id="itemName" name="itemName" class="form-control" placeholder="Enter Item Name"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Unit Type</label></div>
+                        <div class="col-12 col-md-7"><input type="text" required id="unitType" name="unitType" class="form-control" placeholder="Enter Unit Type"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Unit Price</label></div>
+                        <div class="col-12 col-md-7"><input type="text" required id="unitPrice" name="unitPrice" class="form-control" placeholder="Enter Unit Price"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Reorder Level (Units)</label></div>
+                        <div class="col-12 col-md-7"><input type="text" required id="reorderLevel" name="reorderLevel" class="form-control" placeholder="Enter Reorder Level"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-7"><textarea  name="desc" required id="desc" rows="3" placeholder="Enter Description" class="form-control"></textarea></div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Save
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </form>
         </div>
     </div>
     <div class="content mt-3">
