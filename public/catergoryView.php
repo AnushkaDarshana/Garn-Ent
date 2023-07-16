@@ -71,28 +71,27 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                $viewCatagory = new ProductCatagory();
-                                $result = $viewCatagory->get_catagory();
+                                include '../config/db.php';
+                                $sql = "SELECT * FROM g_product_catagory";
+                                $result = $conn->query($sql);
 
-                                foreach ($result as $item)
-                                {
-                                    $dis = '';
-                                    if ($_SESSION['usertype'] != "Admin")
-                                    {
-                                        $dis = 'disabled';
+                                if ($result->num_rows > 0) {
+                                    // Display the product categories in the table
+                                    while ($row = $result->fetch_assoc()) {
+                                        $dis = '';
+                                        echo "<tr id='cat_" . $row['catagory_id'] . "'>";
+                                        echo "<td>" . $row['catagory_id'] . "</td>";
+                                        echo "<td>" . $row['catagory_name'] . "</td>";
+                                        echo "<td>" . $row['catagory_description'] . "</td>";
+                                        echo "<td>";
+                                        echo "<button type='button' class='btn btn-danger btn-sm' onclick='del_cat(" . $row['catagory_id'] . ")' $dis>";
+                                        echo "<i class='fa fa-times-circle'></i> Delete</button>";
+                                        echo "</td>";
+                                        echo "</tr>";
                                     }
-                                    echo
-                                    ("
-                                          <tr id='cat_$item->catId'>
-                                            <td>$item->catId</td>
-                                            <td>$item->catName</td>
-                                            <td>$item->catDescription</td>
-                                            <td>
-                                                <button type='button' class='btn btn-danger btn-sm' onclick='del_cat($item->catId)' $dis>
-                                                <i class='fa fa-times-circle'></i> Delete</button>
-                                            </td>
-                                          </tr>
-                                        ");
+                                } else {
+                                    // No product categories found
+                                    echo "<tr><td colspan='4'>No product categories found.</td></tr>";
                                 }
                                 ?>
                                 </tbody>
@@ -105,7 +104,7 @@
     </div><!-- .content -->
 </div>
 <?php
-include_once ("footer.php");
+// include_once ("footer.php");
 ?>
 <script>
     function del_cat(catID)
