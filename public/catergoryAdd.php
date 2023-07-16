@@ -37,7 +37,7 @@
 
 <!--page content start-->
 <div class="col-lg-12">
-    <?php echo ($alert); ?>
+
     <div class="card">
         <div class="card-header">
             <div class="card-header">
@@ -68,9 +68,7 @@
     </div>
 </div>
 <!--page content end-->
-<?php
-    include_once ("footer.php");
-?>
+
 
 </body>
 </html>

@@ -46,19 +46,28 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <div class="page-header float-right">
-                <div class="page-title">
-                    <ol class="breadcrumb text-right">
-                        <?php
 
-                        if ($_SESSION['usertype'] === 'Admin')
-                        {
-                            echo ('<div><button type="button" $dis2 data-toggle="modal" data-target="#largeModal" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Item</button> </div>');
-                        }
-                        ?>
-                    </ol>
-                </div>
-            </div>
+
+                <form action="../src/quality_attribute_add.php" data-parsley-validate="" method="post" action="#" enctype="multipart/form-data" class="form-horizontal">
+                    <input type="hidden"  id="randomNo" name="ran" value="<?=$random;?>">
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Attribute</label></div>
+                        <div class="col-12 col-md-7"><input type="text" required id="attributeName" name="attributeName" class="form-control" placeholder="Enter Attribute Name"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Description</label></div>
+                        <div class="col-12 col-md-7"><textarea  name="attributeDes" required id="attributeDes" rows="3" placeholder="Enter Attribute Description" class="form-control"></textarea></div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Save
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </form>
+
         </div>
     </div>
     <div class="content mt-3">
