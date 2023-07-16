@@ -31,7 +31,7 @@
     WHERE e_id=$id";
  
     if ($conn->query($sql) === TRUE) {
-        echo "Record updated successfully";
+        echo "<script> alert('Record updated successfully'); </script>";
     } else {
         echo "Error updating record: " . $conn->error;
     }

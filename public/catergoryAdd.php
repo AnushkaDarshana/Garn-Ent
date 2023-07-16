@@ -44,7 +44,7 @@
                 <strong>New Catagory</strong>
             </div>
             <div class="card-body card-block">
-                <form action="" data-parsley-validate="" method="post" action="#" enctype="multipart/form-data" class="form-horizontal">
+                <form action="../src/catergory_add.php" data-parsley-validate="" method="post" action="#" enctype="multipart/form-data" class="form-horizontal">
                     <input type="hidden"  id="randomNo" name="ran" value="<?=$random;?>">
                     <div class="row form-group">
                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Catagory Name</label></div>
