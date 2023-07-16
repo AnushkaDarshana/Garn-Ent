@@ -40,7 +40,7 @@
             <strong>New Product</strong>
         </div>
 
-        <form data-parsley-validate="" action="product_new.php" method="post" class="form-horizontal" id="newproduct">
+        <form data-parsley-validate="" action="../src/product_add.php" method="post" class="form-horizontal" id="newproduct">
             <div class="card-body card-block">
 
                 <div class="row form-group" >
@@ -50,8 +50,28 @@
                     <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Product Catagory</label></div>
                     <div class="col-12 col-md-7">
-                        <select id="prdocuctCat" required data-parsley-group="block1"  name="prdocuctCat" class="form-control">
-                            <option>Select Catagory</option>
+                        <select id="catagory_id" required data-parsley-group="block1"  name="catagory_id" class="form-control">
+                        <option value="">Select Category</option>
+                        <?php
+                            // Assuming you have established a database connection
+                            include '../config/db.php';
+
+                            // Retrieve product categories from the database
+                            $sql = "SELECT catagory_id, catagory_name FROM g_product_catagory";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // Generate option elements for each category
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['catagory_id'] . "'>" . $row['catagory_name'] . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No categories found</option>";
+                            }
+
+                            // Close the database connection
+                            $conn->close();
+                        ?> 
                         </select>
                     </div>
                 </div>
@@ -75,7 +95,7 @@
                     <div class="col-12 col-md-7"><input data-parsley-group="block1" data-parsley-type="number" required  type="number" step="0.01" id="proUnitWeight" name="proUnitWeight" placeholder="45" class="form-control"></div>
                 </div>
                 <div class="row form-group">
-                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Buffer Levele (Units)</label></div>
+                    <div class="col col-md-3"><label for="text-input" class=" form-control-label">Buffer Levels (Units)</label></div>
                     <div class="col-12 col-md-7"><input data-parsley-group="block1" data-parsley-type="number" required  type="number" step="0.01" id="bufferLevel" name="bufferLevel" placeholder="1500" class="form-control"></div>
                 </div>
                 <div class="card-footer" align="center">
@@ -86,4 +106,6 @@
                         Submit <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
+                        </div>
+            </form>
 
