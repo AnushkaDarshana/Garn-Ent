@@ -102,34 +102,37 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                $rawMats = new RawMaterial();
-                                $result = $rawMats->view_raw_material();
+                                include '../config/db.php';
 
-                                foreach ($result as $item)
-                                {
-                                    $dis = '';
-                                    if ($_SESSION['usertype'] != 'Admin')
-                                    {
-                                        $dis = 'disabled';
-                                    }
-                                    echo
-                                    ("
-                                          <tr id='raw_$item->rawId'>
-                                            <td>$item->rawId</td>
-                                            <td>$item->rawName</td>
-                                            <td>$item->reOrderLevel</td>
-                                            <td>$item->rawType</td>
-                                            <td>$item->unitPrice</td>
-                                            <td>$item->description</td>
+                                $sql = "SELECT * FROM g_raw_meterial";
+                                $result = $conn->query($sql);
+                                
+                                if ($result->num_rows > 0) { 
+                                    while ($row = $result->fetch_assoc()) {
+                                    echo "
+                                        <tr id='raw_" . $row['raw_id'] . "'>
+                                            <td>" . $row['raw_id'] . "</td>
+                                            <td>" . $row['raw_name'] . "</td>
+                                            <td>" . $row['raw_description'] . "</td>
+                                            <td>" . $row['raw_type'] . "</td>
+                                            <td>" . $row['raw_reorder_level'] . "</td>
+                                            <td>" . $row['raw_unit_price'] . "</td>
                                             <td>
-                                                <button type='button' data-toggle='modal' data-target='#editModal' $dis class='btn btn-success btn-sm' onclick='edit_raw($item->rawId)'>
-                                                <i class='fa fa-edit'></i> Edit</button>
-                                                <button type='button' class='btn btn-danger btn-sm' $dis onclick='del_raw($item->rawId)'>
-                                                <i class='fa fa-times-circle'></i> Delete</button>
-                                            </td>
-                                          </tr>
-                                        ");
+                                                        <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editInfo' onclick='editInfo(" . $row['raw_id'] . ")' title='Product Edit'>
+                                                            <i class='fa fa-edit'></i>
+                                                        </button>
+                                                        <button type='button' class='btn btn-danger btn-sm' onclick='deletePro(" . $row['raw_id'] . ")' title='Product Delete'>
+                                                            <i class='fa fa-trash-o'></i>
+                                                        </button>
+                                                    </td>
+                                        </tr>
+                                    ";
                                 }
+                            } else {
+                                echo "<tr><td colspan='8'>No raw materials found.</td></tr>";
+                            }
+                            
+                            $conn->close();
                                 ?>
                                 </tbody>
                             </table>
@@ -263,9 +266,6 @@
     </div>
 </div>
 <!--edit modal end-->
-<?php
-include_once ('footer.php');
-?>
 <script>
 //    function del_raw(rawID)
 //    {

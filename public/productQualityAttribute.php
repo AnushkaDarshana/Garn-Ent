@@ -96,14 +96,6 @@
                                 $result = $conn->query($sql);
                                 
                                 if ($result->num_rows > 0) {
-                                    echo "
-                                        <tr>
-                                            <th scope='col'>Attribute ID</th>
-                                            <th scope='col'>Attribute Name</th>
-                                            <th scope='col'>Description</th>
-                                            <th scope='col'>Action</th>
-                                        </tr>
-                                    ";
                                 
                                     while ($row = $result->fetch_assoc()) {
                                         echo "
@@ -112,8 +104,13 @@
                                                 <td>" . $row['g_attribute_name'] . "</td>
                                                 <td>" . $row['g_attribute_desc'] . "</td>
                                                 <td>
-                                                    <!-- Action buttons here -->
-                                                </td>
+                                                        <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editInfo' onclick='editInfo(" . $row['g_attribute_id'] . ")' title='Product Edit'>
+                                                            <i class='fa fa-edit'></i>
+                                                        </button>
+                                                        <button type='button' class='btn btn-danger btn-sm' onclick='deletePro(" . $row['g_attribute_id'] . ")' title='Product Delete'>
+                                                            <i class='fa fa-trash-o'></i>
+                                                        </button>
+                                                    </td>
                                             </tr>
                                         ";
                                     }
