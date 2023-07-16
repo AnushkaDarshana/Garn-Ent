@@ -60,40 +60,40 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $proItem = new Product();
-                                    $res = $proItem->view_product();
+                                    include '../config/db.php';
 
-                                    foreach ($res as $item)
-                                    {
-                                        $dis = '';
-                                        if ($_SESSION['usertype'] != 'Admin')
-                                        {
-                                            $dis = "disabled";
-                                        }
-                                        echo
-                                        ("
-                                          <tr id='pro_$item->productId'>
-                                            <td>$item->productId</td>
-                                            <td>$item->productName</td>
+                                    $sql = "SELECT * FROM g_product";
+                                    $result = $conn->query($sql);
+                                    
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
                                             
-                                            <td>$item->productUnitPrz</td>
-                                            <td>$item->productUnitWeight</td>
-                                            <td>$item->productBufferLevel</td>
-                                            <td>$item->heatingTime</td>
-                                            <td>$item->temp</td>
-                                            <td>
-                                                <button type='button' class='btn btn-primary btn-sm' $dis data-toggle='modal' data-target='#editInfo' onclick='editInfo($item->productId)' title='Product Edit'>
-                                                    <i class='fa fa-edit'></i> </button>
-                                                <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#recInfo' onclick='viewReicpe($item->productId)' title='Product Reicipe'>
-                                                    <i class='fa fa-fire'></i></button>
-                                                <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#qualityAttri' onclick='viewQualityAtr($item->productId)' title='Product Quailty Check'>
-                                                    <i class='fa fa-check-square-o'></i></button>
-                                                <button type='button' class='btn btn-danger btn-sm' $dis onclick='deletePro($item->productId)' title='Product Delete'>
-                                                    <i class='fa fa-trash-o'></i></button>
-                                            </td>
-                                          </tr>
-                                        ");
+                                            echo "
+                                                    <tr id='pro_" . $row['product_id'] . "'>
+                                                    <td>" . $row['product_id'] . "</td>
+                                                    <td>" . $row['product_name'] . "</td>
+                                                    <td>" . $row['product_unit_price'] . "</td>
+                                                    <td>" . $row['product_unit_weight'] . "</td>
+                                                    <td>" . $row['buffer_l'] . "</td>
+                                                    <td>" . $row['t_hour'] . "</td>
+                                                    <td>" . $row['temp'] . "</td>
+                                                    <td>
+                                                        <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editInfo' onclick='editInfo(" . $row['product_id'] . ")' title='Product Edit'>
+                                                            <i class='fa fa-edit'></i>
+                                                        </button>
+                                                        <button type='button' class='btn btn-danger btn-sm' onclick='deletePro(" . $row['product_id'] . ")' title='Product Delete'>
+                                                            <i class='fa fa-trash-o'></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='8'>No products found.</td></tr>";
                                     }
+                                    
+                                    $conn->close();
+                                    
                                 ?>
                                 </tbody>
                             </table>
@@ -259,9 +259,6 @@
     </div>
 </div>
 
-<?php
-    include_once ('footer.php');
-?>
 <script>
 //    ********************************************edit product info********************************
     function editInfo(productId)

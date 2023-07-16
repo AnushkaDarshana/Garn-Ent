@@ -90,30 +90,39 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                include_once ('../backend/QualityAttribute.php');
-                                $qty = new QualityAttribute();
-                                $result = @$qty->get_all_attributes();
+                                include '../config/db.php';
 
-                                foreach ($result as $item)
-                                {
-                                    $dis = '';
-                                    if ($_SESSION['usertype'] != 'Admin')
-                                    {
-                                        $dis = 'disabled';
+                                $sql = "SELECT * FROM g_quality_attribute";
+                                $result = $conn->query($sql);
+                                
+                                if ($result->num_rows > 0) {
+                                    echo "
+                                        <tr>
+                                            <th scope='col'>Attribute ID</th>
+                                            <th scope='col'>Attribute Name</th>
+                                            <th scope='col'>Description</th>
+                                            <th scope='col'>Action</th>
+                                        </tr>
+                                    ";
+                                
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "
+                                            <tr id='attr_" . $row['g_attribute_id'] . "'>
+                                                <td>" . $row['g_attribute_id'] . "</td>
+                                                <td>" . $row['g_attribute_name'] . "</td>
+                                                <td>" . $row['g_attribute_desc'] . "</td>
+                                                <td>
+                                                    <!-- Action buttons here -->
+                                                </td>
+                                            </tr>
+                                        ";
                                     }
-                                    echo
-                                    ("
-                                          <tr id='qty_$item->qtyAtriId'>
-                                            <td>$item->qtyAtriId</td>
-                                            <td>$item->qtyAtriName</td>
-                                            <td>$item->description</td>
-                                            <td>
-                                                <button type='button' class='btn btn-danger btn-sm' $dis onclick='del_qty($item->qtyAtriId)'>
-                                                <i class='fa fa-times-circle'></i> Delete</button>
-                                            </td>
-                                          </tr>
-                                        ");
+                                } else {
+                                    echo "<tr><td colspan='4'>No attributes found.</td></tr>";
                                 }
+                                
+                                $conn->close();
+                                
                                 ?>
                                 </tbody>
                             </table>
@@ -164,9 +173,6 @@
     </div>
 </div>
 <!--modal end-->
-<?php
-include_once ('footer.php');
-?>
 <script>
     function del_qty(qtyID)
     {
