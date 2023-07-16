@@ -42,7 +42,7 @@
                 <strong>Add Employee</strong>
             </div>
             <div class="card-body card-block">
-                <form action="" data-parsley-validate=""  method="post" action="add_employee.php" enctype="multipart/form-data" class="form-horizontal" id="empFrom">
+                <form data-parsley-validate=""  method="post" action="../src/add_employee.php" enctype="multipart/form-data" class="form-horizontal" id="empFrom">
                         <span id="basic_info" class="">
                             <input type="hidden" id="randomNo" name="ran" value="">
                             <input type='hidden' id='' name='id' value='' >
@@ -74,7 +74,7 @@
                             <div class="row form-group" >
                                 <div class="col col-md-2"><label for="text-input" class="form-control-label">Employee Type</label></div>
                                 <div class="col-12 col-md-7">
-                                    <select name="e_user_type" id="e_user_type" class="form-control" required>
+                                    <select name="e_user_type" id="e_user_type" class="form-control">
                                         <option value=''>Select User Type</option>
                                         
                                     </select>

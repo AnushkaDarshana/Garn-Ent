@@ -9,6 +9,7 @@
 
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="icon" href="images/logo2.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -32,6 +33,13 @@
         <!-- Header-->
 
         <?php include './components/topNav.html'; ?>
+<?php
+    include '../config/db.php'; // include the connection file here
+
+    // Select all employee records
+    $sql = "SELECT * FROM g_employee";
+    $result = $conn->query($sql);
+?>
 
 <div class="content mt-3">
     <div class="animated fadeIn">
@@ -50,19 +58,28 @@
                                 <th>Designation</th>
                                 <th>Email</th>
                                 <th>Contact No</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Social Status</th>
+                                <th>Account Status</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
-             
+                            <?php
+                            if ($result->num_rows > 0) {
+                                // Output data of each row
+                                while($row = $result->fetch_assoc()) {?>
                                            <tr class='$btn'  id = 'user_$item->employee_id'>
-                                                <td>$item->employee_id</td>
-                                                <td>$item->empName</td>
-                                                <td>$item->user_type</td>
-                                                <td>$item->emp_email</td>
-                                                <td>$item->tel</td>
-                                                <td id = 'status'>$item->empStatus</td>
+                                                <?php 
+                                                echo "<td>" . $row["e_id"] . "</td>";
+                                                echo "<td>" . $row["e_name"] . "</td>";
+                                                
+                                                echo "<td>" . $row["designation"] . "</td>";
+                                                echo "<td>" . $row["e_email"] . "</td>";
+                                                echo "<td>" . $row["e_contact"] . "</td>";                                                
+                                                echo "<td>" . $row["e_soc_status"] . "</td>";
+                                                
+                                                ?>
+                                                
                                                 <td>
                                                     <button type='button' id='btn_active'
                                                     class='btn btn-success btn-sm $act' title='Activate Employee' onclick='user_active($item->employee_id, this)'>
@@ -72,21 +89,28 @@
                                                     <button type='button' id='btn_suspend' title='Deactivate Employee' class='btn btn-warning btn-sm $sus' onclick='user_suspend($item->employee_id, this)'>
                                                     <i class='fa fa-ban'></i>
                                                     </button>
-                                                    
-                                                    <button type='button' id='btn_view' onclick='viewInfo($item->employee_id)' data-toggle=\"modal\" data-target=\"#largeModal\" title='View Employee All Informations' class='btn btn-primary btn-sm'>
-                                                    <i class='fa fa-eye'></i>
-                                                    </button>
-
-                                                    <a href='add_employee.php?act=edit&id=$item->employee_id'> <button title='Edit Employee Information' type='button' class='btn btn-secondary btn-sm'>
-                                                    <i class='fa fa-edit'></i>
-                                                    </button></a>
-
-                                                    <button type='button' class='btn btn-danger btn-sm' title='Delete Employee' onclick='user_delete($item->employee_id)'>
-                                                        <i class='fa fa-trash'></i>
-                                                    </button>
+                                                <?php
+                                                echo "<td> <button class='btn btn-info' data-toggle='modal' data-target='#employeeModal' 
+                                                data-id='".$row["e_id"]."' 
+                                                data-name='".$row["e_name"]."' 
+                                                data-designation='".$row["designation"]."' 
+                                                data-email='".$row["e_email"]."' 
+                                                data-contact='".$row["e_contact"]."' 
+                                                data-status='".$row["e_soc_status"]."' 
+                                                data-reg-date='".$row["e_reg_date"]."' 
+                                                data-address='".$row["e_address"]."' 
+                                                data-nic='".$row["e_nic"]."' 
+                                                data-gender='".$row["e_gender"]."' 
+                                                data-user-type='".$row["e_user_type_fk"]."'>View More</button></td>";
+                                                echo "</tr>";
+                                                ?>
 
                                                  </td>
                                            </tr>
+                                           <?php
+                                        }
+                                    }
+                                ?>
                 
                             </tbody>
                         </table>
@@ -96,79 +120,82 @@
         </div>
     </div>
 </div>
-<!-- page content end -->
-<!--emp info modal start-->
-<div class="modal fade" id="largeModal" tabiraw_materials.phpndex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">Employee Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-body card-block">
-                                <form data-parsley-validate=""  method="post" action="raw_materials.php" enctype="multipart/form-data" class="form-horizontal">
-                                    <input type="hidden"  id="randomNo" name="ran" value="<?=$random;?>">
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Emp ID</label></div>
-                                        <div class="col-9"><input type="text" disabled id="empID" name="empID" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Name</label></div>
-                                        <div class="col-9"><input type="text" disabled id="empName" name="empName" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Designation</label></div>
-                                        <div class="col-9"><input type="text" disabled id="desig" name="desig" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">NIC No</label></div>
-                                        <div class="col-9"><input type="text" disabled  id="nic" name="nic" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">E mail</label></div>
-                                        <div class="col-9"><input type="text" disabled id="email" name="email" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Contact No</label></div>
-                                        <div class="col-9"><input type="text" disabled id="tel" name="tel" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Address</label></div>
-                                        <div class="col-9"><input type="text" disabled id="addrss" name="addrss" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Civil Status</label></div>
-                                        <div class="col-9"><input type="text" disabled id="cstatus" name="cstatus" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Gender</label></div>
-                                        <div class="col-9"><input type="text" disabled id="gender" name="gender" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="row form-group" >
-                                        <div class="col-3"><label for="text-input" class=" form-control-label">Recruit  Date</label></div>
-                                        <div class="col-9"><input type="text" disabled id="date" name="date" placeholder="Enter Name" class="form-control"></div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Employee Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- Modal body with placeholders for the data -->
+        <div class="modal-body">
+            <p><strong>ID:</strong> <input type="text" id="employee-id" readonly /></p>
+            <p><strong>Name:</strong> <input type="text" id="employee-name" /></p>
+            <p><strong>Designation:</strong> <input type="text" id="employee-designation" /></p>
+            <p><strong>Email:</strong> <input type="email" id="employee-email" /></p>
+            <p><strong>Contact:</strong> <input type="text" id="employee-contact" /></p>
+            <p><strong>Status:</strong> <input type="text" id="employee-status" /></p>
+            <p><strong>Reg Date:</strong> <input type="text" id="employee-reg-date" readonly /></p>
+            <p><strong>Address:</strong> <input type="text" id="employee-address" /></p>
+            <p><strong>NIC:</strong> <input type="text" id="employee-nic" /></p>
+            <p><strong>Gender:</strong> <input type="text" id="employee-gender" /></p>
+            <p><strong>User Type:</strong> <input type="text" id="employee-user-type" /></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="save-button">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
     </div>
+  </div>
 </div>
-<!--emp info modal end-->
+
+
+<!-- jQuery to populate and show the modal -->
+<script>
+$(document).ready(function() {
+    $('.btn-info').click(function() {
+        $('#employee-id').val($(this).data('id'));
+        $('#employee-name').val($(this).data('name'));
+        $('#employee-designation').val($(this).data('designation'));
+        $('#employee-email').val($(this).data('email'));
+        $('#employee-contact').val($(this).data('contact'));
+        $('#employee-status').val($(this).data('status'));
+        $('#employee-reg-date').val($(this).data('reg-date'));
+        $('#employee-address').val($(this).data('address'));
+        $('#employee-nic').val($(this).data('nic'));
+        $('#employee-gender').val($(this).data('gender'));
+        $('#employee-user-type').val($(this).data('user-type'));
+    });
+
+    $('#save-button').click(function() {
+        $.ajax({
+            url: '../src/update_employee.php', // The URL of your PHP script that will update the database
+            type: 'POST',
+            data: {
+                id: $('#employee-id').val(),
+                name: $('#employee-name').val(),
+                designation: $('#employee-designation').val(),
+                email: $('#employee-email').val(),
+                contact: $('#employee-contact').val(),
+                status: $('#employee-status').val(),
+                reg_date: $('#employee-reg-date').val(),
+                address: $('#employee-address').val(),
+                nic: $('#employee-nic').val(),
+                gender: $('#employee-gender').val(),
+                user_type: $('#employee-user-type').val()
+            },
+            success: function(result) {
+                // Optional: Do something with the result of the AJAX request (e.g., show a success message)
+                console.log('Success: ', result);
+                window.location.href = "employeeList.php";
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // This function will be called if the AJAX request fails
+                console.log('Error: ', textStatus, errorThrown);
+            }
+        });
+    });
+});
+</script>
 <?php
-    include_once ("footer.php");
+    //include_once ("footer.php");
 ?>
     </body>
 </html>
