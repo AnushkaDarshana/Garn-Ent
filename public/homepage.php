@@ -70,8 +70,7 @@
                 </div>
             </div>
         </div>
-
-
+        
         <div class="row">
     <div class="col-4">
         <div class="col-12">
@@ -83,7 +82,23 @@
                             <div class="stat-content dib">
                                 <div class="stat-text">Total Number of Employees</div>
                                 <div class="stat-digit">
-                                    0
+                                <?php
+                                    include '../config/db.php';
+                                    $sql = "SELECT COUNT(*) AS total_employees FROM g_employee";
+                                    $result = $conn->query($sql);
+
+                                    if ($result->num_rows > 0) {
+                                        $row = $result->fetch_assoc();
+                                        $totalEmployees = $row["total_employees"];
+                                    ?>
+                                    <?php 
+                                        echo $totalEmployees;  
+                                        } else {
+                                            echo "No employees found.";
+                                        }                                           
+                                    ?>
+                                        
+                                        
                                 </div>
                             </div>
                         </div>
@@ -103,7 +118,18 @@
                             <div class="stat-content dib">
                                 <div class="stat-text">Total Number of Active Users</div>
                                 <div class="stat-digit">
-                                    0
+                                    <?php
+                                        $sql = "SELECT COUNT(*) AS total_active_users FROM g_user WHERE status = 1";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            $row = $result->fetch_assoc();
+                                            $totalActiveUsers = $row["total_active_users"];
+                                            echo $totalActiveUsers;
+                                        } else {
+                                            echo "No active users found.";
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -120,9 +146,20 @@
                         <div class="stat-widget-one">
                             <div class="stat-icon dib"><i class="fa fa-users text-success border-success"></i></div>
                             <div class="stat-content dib">
-                                <div class="stat-text">Total Number of Online Users</div>
+                                <div class="stat-text">Total Number of Suppliers</div>
                                 <div class="stat-digit" id="onlineUser">
-                                    0
+                                    <?php
+                                        $sql = "SELECT COUNT(*) AS total_suppliers FROM g_supplier";
+                                        $result = $conn->query($sql);
+                                        
+                                        if ($result->num_rows > 0) {
+                                            $row = $result->fetch_assoc();
+                                            $totalSuppliers = $row["total_suppliers"];
+                                            echo $totalSuppliers;
+                                        } else {
+                                            echo "No suppliers found.";
+                                        }
+                                    ?>                                        
                                 </div>
                             </div>
                         </div>

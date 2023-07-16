@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userType = $_POST['e_user_type'];
     $gender = $_POST['e_gender'];
     $socialStatus = $_POST['e_soc_status'];
-    $userName = $_POST['userName'];
     $password = $_POST['u_password'];
 
 
