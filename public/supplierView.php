@@ -38,7 +38,6 @@
 
 
 <div class="content mt-3">
-    <?=$alert?>
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
@@ -60,31 +59,32 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    $viewsup = new Supplier();
-                                    $result = $viewsup->view_supplier();
-                                    if($result){
-                                        foreach ($result as $item)
-                                        {
-                                            echo
-                                            ("
-                                           <tr id='sup_$item->supplier_id'>
-                                                <td>$item->supplier_id</td>
-                                                <td>$item->supplier_name</td>
-                                                <td>$item->supplier_email</td>
-                                                <td>$item->supplier_contact</td>
-                                                <td>$item->supplier_fax</td>
-                                                <td>
-                                                <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#viewInfo' onclick='viewInfo($item->supplier_id)' title='View Raw Materials'>
-                                                    <i class='fa fa-edit'></i> Items</button>
-                                                <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#editInfo' onclick='editInfo($item->supplier_id)' title='Edit Informations'>
-                                                    <i class='fa fa-fire'></i> Edit</button>
-                                                <button type='button' class='btn btn-danger btn-sm' onclick='delete_sup($item->supplier_id)' title='Delete Supplier'>
-                                                    <i class='fa fa-trash-o'></i> Delete</button>
-                                                </td>
-                                           </tr>
-                                        ");
+                                    include '../config/db.php';
+
+                                    $sql = "SELECT * FROM g_supplier";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "
+                                                <tr id='supplier_" . $row['s_id'] . "'>
+                                                    <td>" . $row['s_id'] . "</td>
+                                                    <td>" . $row['s_name'] . "</td>
+                                                    <td>" . $row['s_email'] . "</td>
+                                                    <td>" . $row['s_contact'] . "</td>
+                                                    <td>" . $row['s_fax'] . "</td>
+                                                    <td>
+                                                        <!-- Action buttons here -->
+                                                        <button type='button' class='btn btn-primary btn-sm' onclick='editSupplier(" . $row['s_id'] . ")'>Edit</button>
+                                                        <button type='button' class='btn btn-danger btn-sm' onclick='deleteSupplier(" . $row['s_id'] . ")'>Delete</button>
+                                                    </td>
+                                                </tr>
+                                            ";
                                         }
+                                    } else {
+                                        echo "<tr><td colspan='6'>No suppliers found.</td></tr>";
                                     }
+                                
+                                $conn->close();
 
                                 ?>
                             </tbody>
@@ -202,9 +202,6 @@
     </div>
 </div>
 <!--edit modal end-->
-<?php
-include_once ("footer.php");
-?>
 <script>
     function viewInfo(supID)
     {
