@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to success page
-        header("Location: success_page.php");
+        header("Location: ../public/employeeList.php");
         exit;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
