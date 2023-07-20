@@ -41,6 +41,39 @@
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
+    <!-- for In progress production  -->
+    <style> 
+    #clockdiv{
+        font-family: sans-serif;
+        color: #fff;
+        display: inline-block;
+        font-weight: 100;
+        text-align: center;
+        font-size: 30px;
+    }
+
+    #clockdiv > div{
+        padding: 10px;
+        border-radius: 3px;
+        background: #00BF96;
+        display: inline-block;
+        /*margin: 1rem;*/
+    }
+
+    #clockdiv div > span{
+        padding: 15px;
+        border-radius: 3px;
+        background: #00816A;
+        display: inline-block;
+    }
+
+    .smalltext{
+        padding-top: 5px;
+        font-size: 16px;
+    }
+</style>
+
+
 </head>
 <body>
 
@@ -57,7 +90,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Admin Dashboard</h1>
+                        <h1>PM Dashboard</h1>
                     </div>
                 </div>
             </div>
@@ -72,163 +105,7 @@
             </div>
         </div>
         
-        <div class="row">
-    <div class="col-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <a href="">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="fa fa-users text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Number of Employees</div>
-                                <div class="stat-digit">
-                                <?php
-                                    include '../config/db.php';
-                                    $sql = "SELECT COUNT(*) AS total_employees FROM g_employee";
-                                    $result = $conn->query($sql);
-
-                                    if ($result->num_rows > 0) {
-                                        $row = $result->fetch_assoc();
-                                        $totalEmployees = $row["total_employees"];
-                                    ?>
-                                    <?php 
-                                        echo $totalEmployees;  
-                                        } else {
-                                            echo "No employees found.";
-                                        }                                           
-                                    ?>
-                                        
-                                        
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <a href="view_user_list.php">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="fa fa-user text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Number of Active Users</div>
-                                <div class="stat-digit">
-                                    <?php
-                                        $sql = "SELECT COUNT(*) AS total_active_users FROM g_user WHERE status = 1";
-                                        $result = $conn->query($sql);
-
-                                        if ($result->num_rows > 0) {
-                                            $row = $result->fetch_assoc();
-                                            $totalActiveUsers = $row["total_active_users"];
-                                            echo $totalActiveUsers;
-                                        } else {
-                                            echo "No active users found.";
-                                        }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <a href="view_user_list.php">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="fa fa-users text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Number of Suppliers</div>
-                                <div class="stat-digit" id="onlineUser">
-                                    <?php
-                                        $sql = "SELECT COUNT(*) AS total_suppliers FROM g_supplier";
-                                        $result = $conn->query($sql);
-                                        
-                                        if ($result->num_rows > 0) {
-                                            $row = $result->fetch_assoc();
-                                            $totalSuppliers = $row["total_suppliers"];
-                                            echo $totalSuppliers;
-                                        } else {
-                                            echo "No suppliers found.";
-                                        }
-                                    ?>                                        
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="stat-widget-one">
-                        <div class="stat-icon dib"><i class="fa fa-cogs text-success border-success"></i></div>
-                        <div class="stat-content dib">
-                            <div class="stat-text">In progress production</div>
-                            <div class="stat-digit">
-                                0
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <a href="sales_order_view.php">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="fa fa-truck text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Pending Sales Orders</div>
-                                <div class="stat-digit">
-                                    0
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <a href="order_view.php">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="fa fa-shopping-cart text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Pending Purchase Order</div>
-                                <div class="stat-digit">
-                                    0
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+       
 <div>
     <div class="col-lg-6">
         <div class="card">
@@ -248,7 +125,125 @@
         </div>
     </div>
 </div>
+<div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="row form-group col-12">
+                    <div class="col-7">
+                        <h4>In Progress Production Plans</h4>
+                    </div>
+                    <div class="col-3">
+                        <button type='button' class='btn btn-primary btn-sm' onclick="window.location.href = 'production_plan_create.php'">
+                            Production Plans</button>
+                    </div>
+                    <div class="col-2">
+                        <button type='button' class='btn btn-success btn-sm' onclick="window.location.href = 'start_production_batch.php'">
+                            Start Production</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="plnaInfo">
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+    <div class="card-header">
+        <div class="row form-group col-12">
+            <div class="col-7">
+                <h4>In Progress Production</h4>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="noPro" class="nodisplay">
+            No Production In Progress
+        </div>
+        <div id="counter-progress" class="">
+            <div>
+                <div id="clockdiv" class="row" style="width: 100%; margin: 0">
+                    <div class="col-12">
+                        <div class="col-4">
+                            <span class="hours" id="hours"></span>
+                            <div class="smalltext">Hours</div>
+                        </div>
+                        <div class="col-4">
+                            <span class="minutes" id="minutes"></span>
+                            <div class="smalltext">Minutes</div>
+                        </div>
+                        <div class="col-4">
+                            <span class="seconds" id="seconds"></span>
+                            <div class="smalltext">Seconds</div>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row" style="width: 100%; margin: 0">
+                    <div class='progress' style="width: 100%;">
+                        <div id="progressbar" class='progress-bar bg-success progress-bar-striped progress-bar-animated' role='progressbar' style='aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="row form-group col-12">
+                <div class="col-9">
+                    <h4>Last Completed Batches</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div>
+                <table class="table superfeed-table">
+                    <thead>
+                    <th>Batch ID</th>
+                    <th>Product Name</th>
+                    <th>Manufacture Date</th>
+                    <th>Status</th>
+                    </thead>
+                    <tbody>
+                    <?php
+                    include_once ('../backend/Batch.php');
+                    $batchInfo = new Batch();
+                    $res = $batchInfo->get_last_n_batches(3);
+                    if ($res)
+                    {
+                        foreach ($res as $item)
+                        {
+                            $bufferClass = '';
+                            if ($item->batchStatus == "Fail")
+                            {
+                                $bufferClass = 'suspend';
+                            }
+                            elseif ($item->batchStatus == "Pass")
+                            {
+                                $bufferClass = 'act';
+                            }
+                            echo ("<tr class='$bufferClass'>
+                                    <td>$item->batchId</td>
+                                    <td>$item->produtName</td>
+                                    <td>$item->endTime</td>
+                                    <td>$item->batchStatus</td>
+                                    </tr>");
+                        }
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
