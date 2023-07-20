@@ -5,7 +5,9 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="./"><h5>GARN Enterprices</h5></a>
+            <a class="navbar-brand" href="./">
+                <h5>GARN Enterprices</h5>
+            </a>
             <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
         </div>
 
@@ -14,7 +16,8 @@
                 <li class="active">
                     <a href="homepage.php"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
-                <h3 class="menu-title">Admin Tools</h3><!-- /.menu-title -->
+                <h3 class="menu-title">Admin Tools</h3>
+                <!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Employees</a>
                     <ul class="sub-menu children dropdown-menu">
@@ -48,12 +51,8 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Stocks</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-bars"></i><a href="stocksFinishedView.php">Current Finished Stocks</a></li>
-                        <li><i class="fa fa-bars"></i><a href="stocksFinishedIn.php">Finished Stocks IN</a></li>
-                        <li><i class="fa fa-bars"></i><a href="stocksFinishedOut.php">Finished Stocks OUT</a></li>
-                        <li><i class="fa fa-bars"></i><a href="stocksRawView.php">Current Raw Stocks</a></li>
-                        <li><i class="fa fa-bars"></i><a href="stocksRawIn.php">Raw Stocks IN</a></li>
-                        <li><i class="fa fa-bars"></i><a href="stocksRawOut.php">Raw Stocks OUT</a></li>
+                        <li><i class="fa fa-bars"></i><a href="stocksFinishedIn.php">Finished Stocks</a></li>
+                        <li><i class="fa fa-bars"></i><a href="stocksRawIn.php">Raw Stocks</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -155,9 +154,11 @@
                     </ul>
                 </li> -->
             </ul>
-        </div><!-- /.navbar-collapse -->
+        </div>
+        <!-- /.navbar-collapse -->
     </nav>
-</aside><!-- /#left-panel -->
+</aside>
+<!-- /#left-panel -->
 
 
 <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -174,10 +175,10 @@
 <script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
 <script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
 <script>
-    ( function ( $ ) {
+    (function($) {
         "use strict";
 
-        jQuery( '#vmap' ).vectorMap( {
+        jQuery('#vmap').vectorMap({
             map: 'world_en',
             backgroundColor: null,
             color: '#ffffff',
@@ -186,8 +187,8 @@
             enableZoom: true,
             showTooltip: true,
             values: sample_data,
-            scaleColors: [ '#1de9b6', '#03a9f5' ],
+            scaleColors: ['#1de9b6', '#03a9f5'],
             normalizeFunction: 'polynomial'
-        } );
-    } )( jQuery );
+        });
+    })(jQuery);
 </script>

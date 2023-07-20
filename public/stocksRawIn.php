@@ -41,7 +41,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Raw Material In-Stock</strong>
+                            <strong class="card-title">Raw Material Stock</strong>
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table" class="table table-bordered superfeed-table">
@@ -56,21 +56,28 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                include_once ('../backend/RowStock.php');
-                                $itemList = new RowStock();
-                                $result = $itemList->get_all_instock();
-                                foreach ($result as $item)
-                                {
+                                include '../config/db.php';
 
-                                    echo ("
-                                            <tr id='pro_$item->rawID'>
-                                            <td>$item->rawID</td>
-                                            <td>$item->stock_item_name</td>
-                                            <td id='hand_$item->rawID'>$item->rawQty</td>
-                                            <td id='buff_$item->rawID'>GRN_$item->stock_invioce</td>
-                                            <td>$item->stock_logDate</td>
-                                            </tr>");
+                                $sql = "SELECT * FROM g_raw_stock";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "
+                                            <tr>
+                                                <td>" . $row['stock_id'] . "</td>
+                                                <td>" . $row['matName'] . "</td>
+                                                <td>" . $row['quantity'] . "</td>
+                                                <td>" . $row['reference'] . "</td>
+                                                <td>" . $row['date'] . "</td>
+                                            </tr>
+                                        ";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6'>No data found in the raw stock table.</td></tr>";
                                 }
+                                
+                                $conn->close();
                                 ?>
                                 </tbody>
                             </table>
@@ -81,10 +88,3 @@
         </div>
     </div>
 </div>
-<!--page content end-->
-<?php
-include_once ('footer.php');
-?>
-<script>
-
-</script>

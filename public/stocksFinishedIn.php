@@ -48,33 +48,34 @@
                                 <tr>
                                     <th>Product ID</th>
                                     <th>Product Name</th>
-                                    <th>Unit Weight (Kg)</th>
                                     <th>Quantity</th>
-                                    <th>Reference</th>
                                     <th>Last Update Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                include_once ('../backend/FinishStock.php');
-                                $itemList = new FinishStock();
-                                $result = $itemList->get_finished_in_stock();
-                                if($result){
-                                    foreach ($result as $item)
-                                    {
-                                        echo ("
-                                            <tr>
-                                            <td>$item->itemID</td>
-                                            <td>$item->itemName</td>
-                                            <td>$item->unitWeight</td>
-                                            <td>$item->qunatity</td>
-                                            <td>$item->reference</td>
-                                            <td>$item->date</td>
-                                            </tr>");
-                                    }
-                                }
+                                include '../config/db.php';
 
-                               ?>
+                                $sql = "SELECT * FROM g_finish_stock";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "
+                                            <tr>
+                                                <td>" . $row['stock_id'] . "</td>
+                                                <td>" . $row['matName'] . "</td>
+                                                <td>" . $row['quantity'] . "</td>
+                                                <td>" . $row['date'] . "</td>
+                                            </tr>
+                                        ";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6'>No data found in the raw stock table.</td></tr>";
+                                }
+                                
+                                $conn->close();
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -85,9 +86,3 @@
     </div>
 </div>
 <!--page content end-->
-<?php
-include_once ('footer.php');
-?>
-<script>
-
-</script>
