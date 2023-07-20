@@ -49,11 +49,20 @@
 
         <!-- Left Panel -->
 
-        <?php include './components/leftNav.html'; ?>
+        <?php
+            if ($userType === "admin") {
+                include './components/leftNav.html';
+            } 
+            elseif ($userType === "sk") {
+                include './components/skleftNav.html';
+            }
+        ?>
 
         <!-- Header-->
 
         <?php include './components/topNav.html'; ?>
+
+        
 
 
 <div>
