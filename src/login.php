@@ -25,12 +25,11 @@
             if($userType == 'admin') {
                 header("location:../public/homepage.php"); // Redirect to admin dashboard
             } elseif ($userType == 'sk') {
-                header("location:../public/homepage.php"); // Redirect to store dashboard
+                header("location:../public/skhomepage.php"); // Redirect to store dashboard
             } elseif ($userType == 'pm') {
-                header("location:../public/homepage.php"); // Redirect to production dashboard
+                header("location:../public/pmhomepage.php"); // Redirect to production dashboard
             } elseif ($userType == 'la') {
-                // Default redirect if userType is unknown
-                header("location:../public/homepage.php"); 
+                header("location:../public/lahomepage.php"); 
             }
 
         } else {

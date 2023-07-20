@@ -1,9 +1,30 @@
+<?php
+    // Start the session
+    session_start();
+
+    
+    
+   $userType = $_SESSION['userType'];
+
+    // Check if the user is logged in by checking if session variables are set
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        // User is logged in.
+    } else{
+        // User is not logged in.
+        // Store message to display as a JavaScript alert.
+        echo "<script type='text/javascript'>alert('You are not logged in.');</script>";
+        // Redirect to login page
+        echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
+        exit;
+    }
+?>
+
 <html>
     <head>
 
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin | Garn Enterprices</title>
+    <title>Garn Enterprices</title>
     <meta name="description" content="Admin Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -16,7 +37,6 @@
     <link rel="stylesheet" href="assets/css/themify-icons.css">
     <link rel="stylesheet" href="assets/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="assets/scss/style.css">
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/new.css">
@@ -28,7 +48,13 @@
 
         <!-- Left Panel -->
 
-        <?php include './components/leftNav.html'; ?>
+        <?php
+            if ($userType === "admin") {
+                include './components/leftNav.html';
+            } elseif ($userType === "pm") {
+                include './components/pmleftNav.html';
+            }
+        ?>
 
         <!-- Header-->
 
