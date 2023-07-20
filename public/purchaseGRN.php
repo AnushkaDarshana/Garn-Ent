@@ -1,7 +1,10 @@
-<!doctype html>
 <?php
     // Start the session
     session_start();
+
+    
+    
+   $userType = $_SESSION['userType'];
 
     // Check if the user is logged in by checking if session variables are set
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
@@ -15,11 +18,13 @@
         exit;
     }
 ?>
-<html class="no-js" lang="">
-<head>
-    <meta charset="utf-8">
+
+<html>
+    <head>
+
+<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin | Garn Enterprices</title>
+    <title>Garn Enterprices</title>
     <meta name="description" content="Admin Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,25 +37,29 @@
     <link rel="stylesheet" href="assets/css/themify-icons.css">
     <link rel="stylesheet" href="assets/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="assets/scss/style.css">
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/new.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-
-</head>
+<head>
 <body>
-
 
         <!-- Left Panel -->
 
-        <?php include './components/leftNav.html'; ?>
+        <?php
+            if ($userType === "admin") {
+                include './components/leftNav.html';
+            } elseif ($userType === "pm") {
+                include './components/pmleftNav.html';
+            }
+        ?>
 
         <!-- Header-->
 
         <?php include './components/topNav.html'; ?>
+
         
 <div>
     <div class="content mt-3">
