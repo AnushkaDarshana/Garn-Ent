@@ -53,6 +53,9 @@
             } elseif ($userType === "pm") {
                 include './components/pmleftNav.html';
             }
+            elseif ($userType === "sk") {
+                include './components/skleftNav.html';
+            }
         ?>
 
         <!-- Header-->
