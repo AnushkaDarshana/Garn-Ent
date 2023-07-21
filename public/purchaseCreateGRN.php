@@ -66,94 +66,18 @@
 
 
 <?php
-include_once ('permission_log.php');
-include_once ('../backend/GRN.php');
-include_once ('../backend/GRN_list.php');
-if ($_SESSION['usertype'] == 'storeKeeper' || $_SESSION['usertype'] == 'qualityManager')
-{
-    header('Location:errorpage/error.php?errorId=1001');
-}
-$alert = "";
-if(isset($_POST['grn_pur_no']))
-{
-    if($_POST['ran'] == $_SESSION['rand'])
-    {
-        $grn = new GRN();
+// include_once ('permission_log.php');
+// include_once ('../backend/GRN.php');
+// include_once ('../backend/GRN_list.php');
+// if ($_SESSION['usertype'] == 'storeKeeper' || $_SESSION['usertype'] == 'qualityManager')
+// {
+    // header('Location:errorpage/error.php?errorId=1001');
+// }
 
-        $grn->grn_issuedDate = $_POST['grn_date'];
-        $grn->grn_invoice_id = $_POST['grn_ino_no'];
-        $grn->grn_purchase_order = $_POST['grn_pur_no'];
-        $grn->grn_supplier_id = $_POST['grn_sup_id'];
-        $grn->grn_invoice_date = $_POST['invoDate'];
-        $grn->grn_extraChargers = $_POST['grn_ext_chargers'];
-        $grn->grn_tax = $_POST['grn_tax'];
-
-        $grnId = $grn->add_grn();
-
-        $grnlist = new  GRN_list();
-        $count = 0 ;
-        $finAlert = false;
-        foreach ($_POST['itemidList'] as $item){
-            $grnlist->item_id = $_POST['itemidList'][$count];
-            $grnlist->item_quntity = $_POST['itemqun'][$count];
-            $grnlist->item_totalPrice = $_POST['itemtotalPrice'][$count];
-            $grnlist->item_discount = $_POST['itemdiscount'][$count];
-            $grnlist->grnOrder_exdate = $_POST['itemexdate'][$count];
-            $grnlist->add_grnList($grnId);
-            $count++;
-
-            $finAlert = true;
-        }
-
-        if ($finAlert)
-        {
-            $msg = 'yes';
-            $alert = ("<div class=''>
-                <div class='alert alert-success alert-dismissable' id='success_alert'>
-                <button type='button' class='close' data-dismiss='alert'  aria-hidden='true'><span class='fa fa-times'></span></button>
-                <div><b>Well done!</b> successfully added to the raw material stock.</div>
-                </div>
-                </div>
-                
-                <script>
-               
-                setTimeout(function() 
-                {
-                  $('#form_emp').val('');
-                  $('#success_alert').fadeOut();
-                },3000); 
-                
-                </script>
-               ");
-        }
-        else
-        {
-            $msg = 'no';
-            $alert = ("<div class=''>
-                <div class='alert alert-danger alert-dismissable' id='fail_alert'>
-                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'><span class='fa fa-times'></span></button>
-                <div><b>Oops!</b> Change a few things up and try submitting again.</div>
-                </div>
-                </div>
-                 <script>
-                    setTimeout(function() {
-                      $('#form_emp').val('');
-                      $('#fail_alert').fadeOut();
-                    },3000); 
-                </script>    
-            ");
-        }
-    }
-}
-
-$random = rand(0,100000);
-$_SESSION['rand']= $random;
-
-include_once ($head);
 ?>
 <!--page content start-->
-<div class="col-lg-12">
-    <?$alert?>
+<div >
+
     <div class="card">
         <div class="card-header">
             <div class="card-header">
@@ -161,7 +85,7 @@ include_once ($head);
             </div>
             <div class="card-body card-block">
                 <form action="" data-parsley-validate="" method="post" action="#" enctype="multipart/form-data" class="form-horizontal">
-                    <input type="hidden"  id="randomNo" name="ran" value="<?=$random;?>">
+
                     <div class="row">
                         <div class="col-6">
                             <div class="row form-group">
@@ -266,84 +190,11 @@ include_once ($head);
 </div>
 <!--page content end-->
 
-<div class="modal fade" id="itemAddModel" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">Add GRN Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-body card-block">
-                                <div>
-                                    <form action="production_plan_create.php" method="post" class="form-horizontal" id="addgrnForm">
-                                        <div class="row form-group">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Item ID</label></div>
-                                            <div class="col-6">
-                                                <input type='text' readonly id='itemid' name='itemid' class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Item Name</label></div>
-                                            <div class="col-6">
-                                                <input type='text' id='itemNameraw' name='itemNameraw' class="form-control" onchange="fill(this.value)">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-3"><label for="text-input" class=" form-control-label">Unit Price (Rs)</label></div>
-                                            <div class="col-6">
-                                                <input type='text' id='uprice' name='unitPrice' class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-3"><label for="text-input" class=" form-control-label">Quantity</label></div>
-                                            <div class="col-6">
-                                                <input type='number' id='itemqun' name='itemqun' class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-3"><label for="text-input" class=" form-control-label">Discount (%)</label></div>
-                                            <div class="col-6">
-                                                <input type='text' id='itemdiscount' name='itemdiscount' class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-3"><label for="text-input" class=" form-control-label">Expire Date</label></div>
-                                            <div class="col-6">
-                                                <input type='date' id='itemexdate' name='itemexdate' class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                            <button type="reset" class="btn btn-warning" >RESET</button>
-                                            <button type="button" class="btn btn-primary" onclick="add_grn()">Add</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
 
-<?php
-include_once ('footer.php')
-?>
+
 <script>
 //    disable the past dates***************************************************************************
     today = new Date().toISOString().split('T')[0];
