@@ -5,9 +5,9 @@ include '../config/db.php';
 if (isset($_GET['supplier_id'])) {
     // Get the selected supplier ID from the AJAX request
     $supplierId = $_GET['supplier_id'];
-    
+
     // SQL query to retrieve products for the selected supplier
-    $sql = "SELECT product_id, product_name FROM g_product WHERE supplier_id = ?";
+    $sql = "SELECT product_id, product_name FROM g_product WHERE s_id = ?";
 
     // Prepare the SQL query and bind the parameter
     $stmt = $conn->prepare($sql);
@@ -22,7 +22,6 @@ if (isset($_GET['supplier_id'])) {
     while ($row = $result->fetch_assoc()) {
         $products[] = $row;
     }
-    echo 13;
     // Return the products as a JSON response
     echo json_encode($products);
 } else {

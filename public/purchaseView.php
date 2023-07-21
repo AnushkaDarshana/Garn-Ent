@@ -195,7 +195,8 @@
 
             // Make an AJAX request to retrieve products for the selected supplier
             // Replace 'get_products.php' with the server endpoint to fetch products based on supplierId
-            fetch('./getProducts.php?supplier_id=' + supplierId)
+            console.log(supplierId);
+            fetch('http://localhost/Garn-ent/public/getProducts.php?supplier_id=' + supplierId)
                 .then(response => response.json())
                 .then(data => {
                     // Populate the product dropdown with the retrieved products
