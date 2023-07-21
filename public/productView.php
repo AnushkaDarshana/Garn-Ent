@@ -77,54 +77,52 @@
                             <table class="table superfeed-table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Code</th>
+                                    <th scope="col">Product ID</th>
                                     <th scope="col">Product Name</th>
+                                    <th scope="col">Supplier Name</th>
 <!--                                    <th scope="col">Category</th>-->
                                     <th scope="col">Unit Price (Rs)</th>
                                     <th scope="col">Unit Weight (Kg)</th>
-                                    <th scope="col">Buffer Level (Units)</th>
-                                    <th scope="col">Time (Minutes)</th>
-                                    <th scope="col">Temperature (Celsius)</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    include '../config/db.php';
+                                include '../config/db.php';
 
-                                    $sql = "SELECT * FROM g_product";
-                                    $result = $conn->query($sql);
-                                    
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            
-                                            echo "
-                                                    <tr id='pro_" . $row['product_id'] . "'>
-                                                    <td>" . $row['product_id'] . "</td>
-                                                    <td>" . $row['product_name'] . "</td>
-                                                    <td>" . $row['product_unit_price'] . "</td>
-                                                    <td>" . $row['product_unit_weight'] . "</td>
-                                                    <td>" . $row['buffer_l'] . "</td>
-                                                    <td>" . $row['t_hour'] . "</td>
-                                                    <td>" . $row['temp'] . "</td>
-                                                    <td>
-                                                        <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editInfo' onclick='editInfo(" . $row['product_id'] . ")' title='Product Edit'>
-                                                            <i class='fa fa-edit'></i>
-                                                        </button>
-                                                        <button type='button' class='btn btn-danger btn-sm' onclick='deletePro(" . $row['product_id'] . ")' title='Product Delete'>
-                                                            <i class='fa fa-trash-o'></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ";
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='8'>No products found.</td></tr>";
+                                $sql = "SELECT p.product_id, p.product_name, s.s_name AS supplier_name, p.product_unit_price, p.product_unit_weight
+                                        FROM g_product p
+                                        INNER JOIN g_supplier s ON p.s_id = s.s_id";
+
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "
+                                            <tr id='pro_" . $row['product_id'] . "'>
+                                                <td>" . $row['product_id'] . "</td>
+                                                <td>" . $row['product_name'] . "</td>
+                                                <td>" . $row['supplier_name'] . "</td>
+                                                <td>" . $row['product_unit_price'] . "</td>
+                                                <td>" . $row['product_unit_weight'] . "</td>
+                                                <td>
+                                                    <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editInfo' onclick='editInfo(" . $row['product_id'] . ")' title='Product Edit'>
+                                                        <i class='fa fa-edit'></i>
+                                                    </button>
+                                                    <button type='button' class='btn btn-danger btn-sm' onclick='deletePro(" . $row['product_id'] . ")' title='Product Delete'>
+                                                        <i class='fa fa-trash-o'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ";
                                     }
-                                    
-                                    $conn->close();
-                                    
+                                } else {
+                                    echo "<tr><td colspan='6'>No products found.</td></tr>";
+                                }
+
+                                $conn->close();
                                 ?>
+
                                 </tbody>
                             </table>
                         </div>

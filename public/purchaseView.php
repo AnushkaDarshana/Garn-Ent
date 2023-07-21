@@ -127,60 +127,60 @@
 
         <!-- Bootstrap Modal -->
         <div class="modal fade" id="addOrderModal" tabindex="-1" role="dialog" aria-labelledby="addOrderModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addOrderModalLabel">Add Purchase Order</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addOrderModalLabel">Add Purchase Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for adding a new purchase order -->
+                <form id="addOrderForm" action="add_purchase_order.php" method="post">
+                    <div class="form-group">
+                        <label for="supplier_id">Supplier</label>
+                        <!-- Dropdown to select the supplier -->
+                        <select name="supplier_id" id="supplier_id" class="form-control" required>
+                            <option value="">Select Supplier</option>
+                            <?php
+                            // Fetch suppliers from the database and populate the dropdown
+                            $sql = "SELECT s_id, s_name FROM g_supplier";
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row['s_id'] . "'>" . $row['s_name'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <!-- Form for adding a new purchase order -->
-                        <form id="addOrderForm" action="add_purchase_order.php" method="post">
-                            <div class="form-group">
-                                <label for="supplier_id">Supplier</label>
-                                <!-- Dropdown to select the supplier -->
-                                <select name="supplier_id" id="supplier_id" class="form-control" required>
-                                    <option value="">Select Supplier</option>
-                                    <?php
-                                    // Fetch suppliers from the database and populate the dropdown
-                                    $sql = "SELECT s_id, s_name FROM g_supplier";
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<option value='" . $row['s_id'] . "'>" . $row['s_name'] . "</option>";
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="product_id">Product</label>
-                                <!-- Dropdown to select the product (will be populated dynamically based on the selected supplier) -->
-                                <select name="product_id" id="product_id" class="form-control" required>
-                                    <option value="">Select Product</option>
-                                    <!-- Products will be populated here via AJAX -->
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" name="quantity" id="quantity" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price (LKR)</label>
-                                <input type="number" name="price" id="price" class="form-control" required>
-                            </div>
-                            <!-- Add other form fields for Date, Status, etc. if needed -->
-                        </form>
+                    <div class="form-group">
+                        <label for="product_id">Product</label>
+                        <!-- Dropdown to select the product (will be populated dynamically based on the selected supplier) -->
+                        <select name="product_id" id="product_id" class="form-control" required>
+                            <option value="">Select Product</option>
+                            <!-- Products will be populated here via AJAX -->
+                        </select>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" form="addOrderForm" class="btn btn-primary">Save</button>
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" id="quantity" class="form-control" required>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="price">Price (LKR)</label>
+                        <input type="number" name="price" id="price" class="form-control" required>
+                    </div>
+                    <!-- Add other form fields for Date, Status, etc. if needed -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="addOrderForm" class="btn btn-primary">Save</button>
             </div>
         </div>
+    </div>
+</div>
 
     </div>
     <!-- Button to open the pop-up modal -->
@@ -195,7 +195,7 @@
 
             // Make an AJAX request to retrieve products for the selected supplier
             // Replace 'get_products.php' with the server endpoint to fetch products based on supplierId
-            fetch('get_products.php?supplier_id=' + supplierId)
+            fetch('./getProducts.php?supplier_id=' + supplierId)
                 .then(response => response.json())
                 .then(data => {
                     // Populate the product dropdown with the retrieved products
@@ -204,8 +204,10 @@
                     data.forEach(product => {
                         productDropdown.innerHTML += '<option value="' + product.product_id + '">' + product.product_name + '</option>';
                     });
+                    console.log("yes");
                 })
                 .catch(error => {
+                    console.log("132");
                     console.error('Error fetching products:', error);
                 });
         });
